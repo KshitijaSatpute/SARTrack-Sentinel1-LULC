@@ -1,0 +1,15 @@
+# SARTrack | Python 3.12 | tested Windows CUDA environment
+# Direct project dependencies; pip installs transitive dependencies automatically.
+# CUDA 12.8 PyTorch wheel source (needed for the exact tested torch build).
+--extra-index-url https://download.pytorch.org/whl/cu128
+
+earthengine-api==1.7.50
+matplotlib==3.11.2
+numpy==2.5.2
+rasterio==1.5.2
+requests==2.34.2
+streamlit==1.66.1
+torch==2.11.0+cu128
+
+# For running the submitted Jupyter notebooks in VS Code/Jupyter.
+ipykernel==7.4.0
