@@ -155,7 +155,7 @@ The original Streamlit app and main pipeline in this repository **still use U-Ne
 | Mean IoU | 38.72% | **46.37%** |
 | Macro F1 | 49.45% | **59.33%** |
 
-**Interpretation:** v3 improves agreement with Dynamic World pseudo-labels on this holdout. The results are not accuracy measured against manually verified ground truth. Water remains challenging (v3 water IoU 18.83%). The experiments are not a controlled single-variable ablation, and the final model has not yet been integrated into the dashboard.
+**Interpretation:** v3 improves agreement with Dynamic World pseudo-labels on this holdout. The results are not accuracy measured against manually verified ground truth. Water remains challenging (v3 water IoU 18.83%). The experiments are not a controlled single-variable ablation, and the separate v3 dashboard has now been integrated and successfully smoke-tested; the original v2 dashboard remains unchanged.
 
 New verified experiment files:
 
@@ -165,7 +165,7 @@ New verified experiment files:
 
 **Asset availability:** The corrected NPZ dataset, model checkpoint binaries, training history CSV, and full evaluation ZIP were backed up separately during experimentation. Their presence in this repository is **not guaranteed**; do not assume a GitHub clone alone reproduces reported results.
 
-**Pending:** ESA WorldCover external sanity-check case study (2021 reference vs 2025 SAR), v3 dashboard integration and smoke tests, final report, demo video, dataset/model delivery, and submission QA.
+**Remaining:** final technical report, demo video, model/dataset delivery links, and submission QA. ESA WorldCover case study and separate v3 dashboard smoke tests are complete.
 
 ## External-reference case study — WorldCover 2021 vs SARTrack v3 (June 2025)
 
@@ -183,7 +183,7 @@ The Esch/Belval v3 prediction has also been compared with an aligned ESA WorldCo
 - [Cross-year comparison and confusion-matrix script](SARTrack_WorldCover_Case_Study.py)
 - [Report-ready visualization script](SARTrack_WorldCover_Report_Figure.py)
 
-The data/reference rasters, comparison PNG, metric CSVs and packaged results are **local project artifacts** and were **not uploaded with this README**. The dashboard still uses **v2** unless subsequently integrated and verified.
+The data/reference rasters, comparison PNG, metric CSVs and packaged results are **local project artifacts** and were **not uploaded with this README**. The original `app.py` still uses **v2**. The separate `app_v3.py` has passed a live 12-month v3 run.
 
 ## Streamlit v3 integration and live smoke test (4 November 2026)
 
