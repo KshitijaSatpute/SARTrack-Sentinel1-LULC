@@ -144,3 +144,25 @@ The notebooks contain the development, training and evaluation workflow. Run the
 Source imagery: ESA Sentinel-1, accessed through Google Earth Engine (`COPERNICUS/S1_GRD`). Pseudo-label source for development: Google Dynamic World (`GOOGLE/DYNAMICWORLD/V1`). Cite the original data products and relevant scientific papers in the final technical report.
 
 **Status:** Functionality tested for Esch/Belval and Luxembourg City, including a July 2025–June 2026 cross-year run. This README documents the observed prototype, not a claim of global validation.
+
+## Research update — U-Net v3 (4 November 2026)
+
+The original Streamlit app and main pipeline in this repository **still use U-Net v2 by default**. A separate v3 model was trained on corrected June pseudo-label exports and compared against v2 on the geographically held-out Esch/Belval test raster.
+
+| Held-out Esch/Belval metric | U-Net v2 | U-Net v3 |
+|---|---:|---:|
+| Overall accuracy | 79.90% | **83.71%** |
+| Mean IoU | 38.72% | **46.37%** |
+| Macro F1 | 49.45% | **59.33%** |
+
+**Interpretation:** v3 improves agreement with Dynamic World pseudo-labels on this holdout. The results are not accuracy measured against manually verified ground truth. Water remains challenging (v3 water IoU 18.83%). The experiments are not a controlled single-variable ablation, and the final model has not yet been integrated into the dashboard.
+
+New verified experiment files:
+
+- [v3 Data Lab training script](SARTrack_v3_DataLab_Train.py) — two-channel U-Net, training configuration, validation, early stopping and checkpoint saving.
+- [Independent v2-v3 comparison script](SARTrack_Esch_Compare_V2_V3.py) — matched preprocessing, tiled inference, confusion matrices, classwise scores and GeoTIFF outputs.
+- [Detailed v3 experiment record](docs/v3_experiment_results.md) — dataset corrections, hyperparameters, per-class IoUs, scientific limitations and reproduction guidance.
+
+**Asset availability:** The corrected NPZ dataset, model checkpoint binaries, training history CSV, and full evaluation ZIP were backed up separately during experimentation. Their presence in this repository is **not guaranteed**; do not assume a GitHub clone alone reproduces reported results.
+
+**Pending:** ESA WorldCover external sanity-check case study (2021 reference vs 2025 SAR), v3 dashboard integration and smoke tests, final report, demo video, dataset/model delivery, and submission QA.
