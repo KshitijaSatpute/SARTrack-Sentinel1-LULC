@@ -184,3 +184,27 @@ The Esch/Belval v3 prediction has also been compared with an aligned ESA WorldCo
 - [Report-ready visualization script](SARTrack_WorldCover_Report_Figure.py)
 
 The data/reference rasters, comparison PNG, metric CSVs and packaged results are **local project artifacts** and were **not uploaded with this README**. The dashboard still uses **v2** unless subsequently integrated and verified.
+
+## Streamlit v3 integration and live smoke test (4 November 2026)
+
+The existing `app.py` / `sartrack_pipeline.py` **remain the original v2 application**. A separate v3 application is now included:
+
+```powershell
+python -m streamlit run app_v3.py --server.port 8502
+```
+
+It invokes `sartrack_pipeline_v3.py`, which uses the local `models/best_unet_v3.pth` weights for live predictions and writes to **`outputs/live_v3/`** to avoid mixing old v2 outputs with new v3 runs. The instant precomputed Esch demo remains **v2**, visibly labelled in the UI. The v3 app's model-details scores refer to the geographically held-out Esch pseudo-label evaluation, not the user-selected run.
+
+**Observed smoke tests on the project laptop:**
+
+- PyTorch `2.11.0+cu128`, `torch.cuda.is_available() == True`.
+- The saved v3 `state_dict` loaded with `strict=True`, and GPU forward-pass output shape was `(1, 5, 128, 128)` with finite logits.
+- Streamlit v3 UI loaded at `localhost:8502`; saved Esch v2 demo displayed the 12-month charts and stability results.
+- **Live Esch/Belval run** for latitude `49.5000`, longitude `5.9670`, January–December 2025 completed with **12/12 monthly maps**. Observed December 2025 predicted Built-up share was **56.85%**, start-to-end Built-up change **−4.03 percentage points**, and predicted stability **64.18%**.
+- Local file-existence/size checks reported **12 SAR GeoTIFFs, 12 LULC GeoTIFFs, 12 LULC PNGs, 12 CSV rows**, plus nonempty change-count and stable-class outputs.
+
+These are **completed functional smoke tests**, not a comprehensive raster-value integrity audit, independent confirmation of real-world changes, or proof of generalization to arbitrary locations.
+
+**Reproduction requirement:** Copy the separately backed-up `best_unet_v3.pth` to `models/` (do not overwrite `best_unet_v2.pth`), install the project's compatible dependencies, configure/authenticate Google Earth Engine, and run the v3 Streamlit command above. The model binary is **not included in this GitHub update**; cloning the repo alone will not run v3 inference.
+
+Integration files: [`app_v3.py`](app_v3.py), [`sartrack_pipeline_v3.py`](sartrack_pipeline_v3.py), [non-destructive creation script](SARTrack_Step82_Create_V3_Dashboard.py).
