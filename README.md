@@ -166,3 +166,21 @@ New verified experiment files:
 **Asset availability:** The corrected NPZ dataset, model checkpoint binaries, training history CSV, and full evaluation ZIP were backed up separately during experimentation. Their presence in this repository is **not guaranteed**; do not assume a GitHub clone alone reproduces reported results.
 
 **Pending:** ESA WorldCover external sanity-check case study (2021 reference vs 2025 SAR), v3 dashboard integration and smoke tests, final report, demo video, dataset/model delivery, and submission QA.
+
+## External-reference case study — WorldCover 2021 vs SARTrack v3 (June 2025)
+
+The Esch/Belval v3 prediction has also been compared with an aligned ESA WorldCover 2021 categorical raster, using five comparable land-cover classes and a common valid-pixel mask (248,273 of 270,399 pixels, 91.82%).
+
+| Cross-year agreement statistic | Result |
+|---|---:|
+| Overall pixel agreement | **60.86%** |
+| Mean IoU | **30.70%** |
+| Macro F1 | **44.18%** |
+
+**Do not interpret these scores as independently verified 2025 accuracy.** The reference is from 2021, SAR prediction from 2025, and WorldCover is also a model-generated land-cover map. Class taxonomy and real land-cover changes can contribute to disagreements.
+
+- [WorldCover case-study methodology, results, caveats](docs/worldcover_case_study.md)
+- [Cross-year comparison and confusion-matrix script](SARTrack_WorldCover_Case_Study.py)
+- [Report-ready visualization script](SARTrack_WorldCover_Report_Figure.py)
+
+The data/reference rasters, comparison PNG, metric CSVs and packaged results are **local project artifacts** and were **not uploaded with this README**. The dashboard still uses **v2** unless subsequently integrated and verified.
