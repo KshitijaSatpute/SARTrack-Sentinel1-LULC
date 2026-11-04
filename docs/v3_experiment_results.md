@@ -1,6 +1,6 @@
 # SARTrack v3 — corrected-data training and independent test
 
-**Status (4 November 2026):** v3 training and the Esch/Belval comparison have been run. v3 is the preferred model candidate, but the Streamlit application in the repository still defaults to **v2**. The external ESA WorldCover sanity check, final report, and final submission QA are pending.
+**Status (4 November 2026):** v3 training and Esch/Belval independent pseudo-label comparison are complete. The external ESA WorldCover cross-year sanity check and a separate live v3 Streamlit application are also complete. The original `app.py` still defaults to **v2**, while `app_v3.py` uses v3. Final report, artifact delivery and final submission QA remain pending.
 
 ## Scope and data
 
@@ -84,11 +84,11 @@ Dependencies used by the scripts include PyTorch, NumPy, rasterio and (for visua
 4. **Spatial and temporal generalization:** A single independent Esch test does not demonstrate global transferability; v3 has not been demonstrated over all possible months/orbits.
 5. **Prediction changes are not verified land-use changes:** Model flicker, seasonal SAR signatures and pseudo-label noise can create apparent transitions.
 6. **Validation patches may overlap:** Patch-level validation statistics do not imply independent pixel samples.
-7. **External validation pending:** ESA WorldCover 2021 vs SAR 2025 can only be treated as a temporal-mismatch sanity check, not definitive 2025 ground truth.
+7. **External reference sanity check completed:** ESA WorldCover 2021 vs SARTrack June 2025 showed 60.86% cross-year pixel agreement; this is **not** definitive 2025 ground-truth accuracy. See [WorldCover case study](worldcover_case_study.md).
 
 ## Current next tasks
 
-- Export WorldCover reference aligned with the Esch grid; document the 2021–2025 mismatch.
-- Integrate the selected checkpoint into Streamlit **without replacing the original v2 asset until smoke tests pass**.
+- WorldCover reference aligned to Esch and cross-year comparison documented; final report must include the 2021–2025 mismatch.
+- Separate `app_v3.py` and `sartrack_pipeline_v3.py` have passed a January–December 2025 live 12-month run; original v2 app and weights remain untouched. See the repository README for smoke-test scope.
 - Package model weights and data with validated links; archive detailed v3 results.
 - Write the final technical report and demo, and complete submission QA.
