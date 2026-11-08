@@ -1,6 +1,26 @@
 # SARTrack — Sentinel-1 Land-Cover Classification and Stability Monitoring
 
-Master's deep-learning prototype that generates **12 monthly, five-class land-cover predictions** from Sentinel-1 SAR (VV/VH) using a lightweight U-Net v2, then reports predicted class-area percentages, percentage-point changes and prediction stability.
+Master's deep-learning prototype for **12 monthly, five-class land-cover predictions** from Sentinel-1 SAR (VV/VH), monthly class-area percentages, percentage-point changes and prediction stability. The **preferred submission interface** is **U-Net v3** via `app_v3_designed.py`; the original `app.py` and `sartrack_pipeline.py` are preserved as the v2 baseline.
+
+## Preferred V3 dashboard — current project entry point (8 November 2026)
+
+From the project directory on a Python 3.12 environment with dependencies installed (see [Requirements](#requirements)):
+
+```powershell
+python -m streamlit run app_v3_designed.py --server.port 8503
+```
+
+- **V3 live inference:** `app_v3_designed.py` calls `sartrack_pipeline_v3.py` with `models/best_unet_v3.pth` (checkpoint must be supplied separately; **not included in this repository**).
+- **Inputs:** latitude, longitude, starting month. A successful run requires Sentinel-1 ascending-orbit VV/VH coverage for all 12 complete calendar months and working Google Earth Engine authentication/project access.
+- **Outputs:** 12 monthly LULC GeoTIFFs and PNGs, class percentages, month-to-month and first-to-last **percentage-point** changes, predicted change-count/stable-class maps, and CSV downloads, under `outputs/live_v3/`.
+- **Five classes:** `0 Water`, `1 Trees`, `2 Grass`, `3 Crops`, `4 Built-up` (`255 NoData`).
+- **Instant Esch saved demo:** reads the **older V2 predictions**; for V3 results, click **Generate 12 Monthly Maps**. Never conflate these two result sources.
+- **Verified saved V3 Esch example:** `49.5000, 5.9670`, start January 2025; Dec Built-up **56.85%**, Jan-to-Dec Built-up **−4.03 percentage points**, stability **64.18%**. These are **predicted** statistics, not verified land-use transitions.
+- **Assessment basis:** V3 Esch holdout against Dynamic World pseudo-labels: OA **83.71%**, mIoU **46.37%**, macro F1 **59.33%**. ESA WorldCover **2021** vs June **2025** prediction is a separate cross-year sanity check, **not 2025 ground-truth accuracy**.
+
+**Submission status:** Source scripts, notebook sources and experiment records are in GitHub. The **dataset, V3 checkpoint, training history/plots, final technical report and demo recording require separate delivery links/artifacts**. This repository is currently private. Neither a clean-machine installation nor all new-location inference has been independently verified. Follow institutional rules on sharing files and AI use.
+
+> The next sections retain the original **V2 application** setup and documentation for reproducibility and comparison. For the final V3 prototype, use the entry point above.
 
 > **Research prototype, not a verified land-use change product.** Model evaluation uses Dynamic World pseudo-labels, not an independent manually annotated reference dataset.
 
