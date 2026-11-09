@@ -392,8 +392,11 @@ def setup_page() -> None:
             st.session_state.sartrack_view = 'results'
             st.session_state.sar_nav = 'Overview'
             st.rerun()
-        except (OSError, ValueError, KeyError) as exc:
-            st.error(f'Saved Esch demo unavailable: {exc}')
+        except (OSError, ValueError, KeyError):
+            st.info(
+                "The saved V2 reference is not available in this package. "
+                "Use Generate 12 Monthly Maps for live U-Net V3 inference."
+            )
 
     if generate:
         st.session_state.sartrack_active = None
@@ -638,6 +641,11 @@ if 'sar_lat' not in st.session_state:
     st.session_state.sar_lat = 49.5
 if 'sar_lon' not in st.session_state:
     st.session_state.sar_lon = 5.967
+# Reset previously stored incorrect coordinates once per session.
+if "sar_coordinate_defaults_fixed" not in st.session_state:
+    st.session_state.sar_lat = 49.5000
+    st.session_state.sar_lon = 5.9670
+    st.session_state.sar_coordinate_defaults_fixed = True
 if 'sar_start_date' not in st.session_state:
     st.session_state.sar_start_date = date(2025,1,1)
 if 'sar_nav' not in st.session_state:
